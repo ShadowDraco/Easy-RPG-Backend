@@ -8,7 +8,6 @@ const PlayerRoute = require('./route-handlers/player-routes')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
 app.use(cors())
 
 let port = process.env.PORT
@@ -21,6 +20,7 @@ const verifyUser = require('./auth/authorize.js')
 // socket io stuff //////////////////////////////
 
 const server = require('http').Server(app)
+server.use(cors())
 const io = require('socket.io')(server)
 
 // when a socket connects to the server
