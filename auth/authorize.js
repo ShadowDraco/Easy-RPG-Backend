@@ -17,7 +17,7 @@ function verifyUser(request, response, next) {
 		jwt.verify(token, getKey, {}, valid)
 		console.log('authorized')
 	} catch (error) {
-		next('Not Authorized')
+		next('Not Authorized', error)
 	}
 }
 
