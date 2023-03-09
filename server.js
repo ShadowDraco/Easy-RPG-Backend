@@ -20,17 +20,8 @@ const verifyUser = require('./auth/authorize.js')
 
 // socket io stuff //////////////////////////////
 
-const socketIo = require('socket.io')
-const io = socketIo(3000, {
-	cors: {
-		origin: [
-			'http://localhost:5173',
-			'http://127.0.0.1:5173',
-			'https://easy-rpg.herokuapp.com/game',
-			'https://easy-rpg.herokuapp.com/',
-		],
-	},
-})
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
 // when a socket connects to the server
 io.on('connection', socket => {
