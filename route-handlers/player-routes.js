@@ -192,7 +192,6 @@ router.put('/add-gold', async (request, response, next) => {
 		const newPlayerPotions = player.stats.potions + 2
 		const newPlayerGold = player.stats.gold + request.body.amountOfGold
 		const newPlayerHealth = request.body.newPlayerHealth
-		console.log(newPlayerHealth)
 
 		let updatedPlayer = await PlayerModel.findOneAndUpdate(
 			{ email: request.user.email },
@@ -207,7 +206,7 @@ router.put('/add-gold', async (request, response, next) => {
 			{ new: true }
 		)
 
-		console.log('updated health', updatedPlayer.stats)
+		console.log('updated player')
 
 		response.status(202).send(updatedPlayer)
 	} catch (error) {
@@ -220,7 +219,6 @@ router.put('/add-gold', async (request, response, next) => {
 router.put('/sync-player', async (request, response, next) => {
 	console.log('syncing player')
 	let newPlayerInfo = request.body.newPlayerInfo
-	console.log(request.body)
 	try {
 		let updatedPlayer = await PlayerModel.findOneAndUpdate(
 			{ email: request.user.email },
@@ -229,6 +227,8 @@ router.put('/sync-player', async (request, response, next) => {
 			},
 			{ new: true }
 		)
+
+		console.log(updatedPlayer)
 
 		response.status(202).send(updatedPlayer)
 	} catch (error) {
