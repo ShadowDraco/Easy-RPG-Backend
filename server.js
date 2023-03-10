@@ -78,7 +78,7 @@ mongoose
 
 app.get('/', (request, response) => {
 	response.status(200).send("You've enter the dungeon")
-	console.log('Dungeon running on 3001')
+	console.log('Dungeon running')
 })
 
 app.use(verifyUser)
