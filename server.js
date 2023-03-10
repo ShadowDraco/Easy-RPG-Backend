@@ -27,7 +27,7 @@ const io = require('socket.io')(server, {
 			'http://localhost:5173',
 			'https://easy-rpg.herokuapp.com',
 			'https://easy-rpg.netlify.app/',
-			'https://13ac-2603-8001-4700-20d4-854f-571c-a7ce-79a6.ngrok.io',
+			'https://20a2-2603-8001-4700-20d4-854f-571c-a7ce-79a6.ngrok.io',
 		],
 	},
 })
