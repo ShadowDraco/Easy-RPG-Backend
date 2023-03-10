@@ -80,7 +80,7 @@ router.get('/get', async (request, response, next) => {
 			let noMapPlayer = { ...newPlayer._doc }
 			noMapPlayer.map = ''
 
-			response.json({
+			response.status(201).send({
 				player: noMapPlayer,
 				room: newPlayer.map.rooms[player.position],
 				presentableRooms: newPlayer.map.presentableRooms,
@@ -94,7 +94,7 @@ router.get('/get', async (request, response, next) => {
         } */
 	} catch (error) {
 		console.log('error getting user')
-		next()
+		next('could not find user')
 	}
 })
 
