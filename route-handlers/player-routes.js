@@ -220,6 +220,7 @@ router.put('/add-gold', async (request, response, next) => {
 router.put('/sync-player', async (request, response, next) => {
 	console.log('syncing player')
 	let newPlayerInfo = request.body.newPlayerInfo
+	console.log(request.body)
 	try {
 		const newPlayerPotions = newPlayerInfo.stats.potions
 		const newPlayerGold = newPlayerInfo.stats.gold
