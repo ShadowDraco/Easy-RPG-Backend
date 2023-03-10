@@ -215,7 +215,7 @@ router.put('/add-gold', async (request, response, next) => {
 	}
 })
 
-// Add Gold
+// sync player
 router.put('/sync-player', async (request, response, next) => {
 	console.log('syncing player')
 	let newPlayerInfo = request.body.newPlayerInfo
