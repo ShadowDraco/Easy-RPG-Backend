@@ -17,9 +17,9 @@ class Map {
 	generateMap(size) {
 		for (let index = 1; index < size; index++) {
 			let weightedRandom = randomFromTo(0, 300)
-			if (weightedRandom < 150) {
+			if (weightedRandom < 200) {
 				this.rooms.push(new Room(roomTypes[0], index))
-			} else if (weightedRandom > 150 && weightedRandom < 250) {
+			} else if (weightedRandom > 200 && weightedRandom < 275) {
 				this.rooms.push(new Room(roomTypes[1], index))
 			} else {
 				this.rooms.push(new Room(roomTypes[2], index))
