@@ -216,6 +216,35 @@ router.put('/add-gold', async (request, response, next) => {
 	}
 })
 
+// Add Gold
+router.put('/sync-player', async (request, response, next) => {
+	console.log('syncing player')
+	let newPlayerInfo = request.body.newPlayerInfo
+	try {
+		const newPlayerPotions = newPlayerInfo.stats.potions
+		const newPlayerGold = newPlayerInfo.stats.gold
+		const newPlayerHealth = newPlayerInfo.stats.health
+
+		let updatedPlayer = await PlayerModel.findOneAndUpdate(
+			{ email: request.user.email },
+			{
+				stats: {
+					...player.stats,
+					gold: newPlayerGold,
+					health: newPlayerHealth,
+					potions: newPlayerPotions,
+				},
+			},
+			{ new: true }
+		)
+
+		response.status(202).send(updatedPlayer)
+	} catch (error) {
+		console.log('you might need a player to update...')
+		next()
+	}
+})
+
 ///// PLAYER MAP
 
 router.get('/new-map', async (request, response, next) => {
