@@ -15,7 +15,7 @@ class Room {
 		if (this.type === 'enemy') {
 			// random between 1-3
 			let enemyCount = randomFromTo(1, 3)
-			for (let i = 0; i < enemyCount.length; i++) {
+			for (let i = 0; i < enemyCount; i++) {
 				this.enemies = this.enemies.push(new Enemy())
 			}
 			this.treasure.gold = randomFromTo(1, 3)
