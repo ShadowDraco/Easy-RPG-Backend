@@ -241,7 +241,7 @@ router.put('/sync-player', async (request, response, next) => {
 		response.status(202).send(updatedPlayer)
 	} catch (error) {
 		console.log('you might need a player to update...')
-		next()
+		next('error syncing player', error)
 	}
 })
 
