@@ -60,6 +60,7 @@ router.post('/change-info', async (request, response, next) => {
 
 router.get('/get', async (request, response, next) => {
 	const user = request.user
+	console.log(user.name)
 
 	try {
 		const player = await PlayerModel.findOne({ email: user.email })
@@ -227,8 +228,6 @@ router.put('/sync-player', async (request, response, next) => {
 			},
 			{ new: true }
 		)
-
-		console.log(updatedPlayer)
 
 		response.status(202).send(updatedPlayer)
 	} catch (error) {

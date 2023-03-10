@@ -16,7 +16,7 @@ class Room {
 			// random between 1-3
 			let enemyCount = randomFromTo(1, 3)
 			for (let i = 0; i < enemyCount; i++) {
-				this.enemies = this.enemies.push(new Enemy())
+				this.enemies.push(new Enemy())
 			}
 			this.treasure.gold = randomFromTo(1, 3)
 			this.descriptionElements = ['Danger', 'Enemies', 'Loot?', 'Fun']
