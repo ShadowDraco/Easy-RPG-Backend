@@ -222,19 +222,10 @@ router.put('/sync-player', async (request, response, next) => {
 	let newPlayerInfo = request.body.newPlayerInfo
 	console.log(request.body)
 	try {
-		const newPlayerPotions = newPlayerInfo.stats.potions
-		const newPlayerGold = newPlayerInfo.stats.gold
-		const newPlayerHealth = newPlayerInfo.stats.health
-
 		let updatedPlayer = await PlayerModel.findOneAndUpdate(
 			{ email: request.user.email },
 			{
-				stats: {
-					...player.stats,
-					gold: newPlayerGold,
-					health: newPlayerHealth,
-					potions: newPlayerPotions,
-				},
+				stats: newPlayerInfo.stats,
 			},
 			{ new: true }
 		)
