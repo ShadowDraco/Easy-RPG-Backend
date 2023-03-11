@@ -37,7 +37,6 @@ function getPresentableRooms(roomsArg) {
 }
 
 router.get('/', (request, response) => {
-	console.log('player route accessed')
 	response.send('Player Route').status(200)
 })
 
@@ -48,25 +47,20 @@ router.post('/change-info', async (request, response, next) => {
 			{ username: request.body.pName, class: request.body.pClass },
 			{ new: true }
 		)
-		console.log(`player info updated on the database | ${player}`)
+
 		response.status(202).send(player)
 	} catch (err) {
-		console.log(err + 'Error updating player info')
-		response.status(400).send(err | `Unable to update database`)
+		next(err, `Unable to update database`)
 	}
-
-	// config = { url: '/change-name', body: {newName: newUsername}}
 })
 
 router.get('/get', async (request, response, next) => {
 	const user = request.user
-	console.log(user.name)
 
 	try {
 		const player = await PlayerModel.findOne({ email: user.email })
 
 		if (player !== null) {
-			console.log('found player')
 			let noMapPlayer = { ...player._doc }
 			noMapPlayer.map = ''
 
@@ -76,7 +70,6 @@ router.get('/get', async (request, response, next) => {
 				presentableRooms: getPresentableRooms(player.map.rooms),
 			}) /// returns 3 rooms to the client as options to go forward - onClick = axios.get('/move-player', {selectedRoom.index})  <- moves player.positon to selected Room
 		} else {
-			console.log('creating player')
 			let newPlayer = await createNewPlayer(user.email, user.name, 0)
 			let noMapPlayer = { ...newPlayer._doc }
 			noMapPlayer.map = ''
@@ -87,21 +80,12 @@ router.get('/get', async (request, response, next) => {
 				presentableRooms: newPlayer.map.presentableRooms,
 			})
 		}
-
-		/*{
-            email,
-            username,
-            stats: { health, etc....}
-        } */
 	} catch (error) {
-		console.log('error getting user')
-		next('could not find user')
+		next('could not find user', error)
 	}
 })
 
 router.put('/move', async (request, response, next) => {
-	console.log('moving position')
-
 	// UPDATE ROOMS AND POSITION IF MORE ROOMS TO CLEAR
 	try {
 		let player = await PlayerModel.findOne({ email: request.user.email })
@@ -122,8 +106,6 @@ router.put('/move', async (request, response, next) => {
 				{ new: true }
 			)
 
-			console.log('successful move')
-
 			response.status(202).send({
 				updatedPlayer: updatedPlayer,
 				newPresentableRooms: newPresentableRooms,
@@ -143,8 +125,6 @@ router.put('/move', async (request, response, next) => {
 				{ new: true }
 			)
 
-			console.log('Player cleared the floor!')
-
 			response.status(202).send({
 				updatedPlayer: updatedPlayer,
 				room: player.map.rooms[0],
@@ -154,8 +134,7 @@ router.put('/move', async (request, response, next) => {
 			})
 		}
 	} catch (error) {
-		console.log('We lost the new rooms', error)
-		next()
+		next('We lost the new rooms', error)
 	}
 })
 
@@ -177,8 +156,7 @@ router.get('/attack-enemy', async (request, response, next) => {
 
 		response.send(updatedPlayer.map.rooms[player.position]).status(200)
 	} catch (error) {
-		console.log('error attacking enemy')
-		next()
+		next('error attacking enemy', error)
 	}
 })
 
@@ -207,12 +185,9 @@ router.put('/add-gold', async (request, response, next) => {
 			{ new: true }
 		)
 
-		console.log('updated player')
-
 		response.status(202).send(updatedPlayer)
 	} catch (error) {
-		console.log('you might need a bank...')
-		next()
+		next('you might need a bank...', error)
 	}
 })
 
@@ -231,7 +206,6 @@ router.put('/sync-player', async (request, response, next) => {
 
 		response.status(202).send(updatedPlayer)
 	} catch (error) {
-		console.log('you might need a player to update...')
 		next('error syncing player', error)
 	}
 })
@@ -249,8 +223,7 @@ router.get('/new-map', async (request, response, next) => {
 
 		response.status(200).send(updatedPlayer.map.rooms[updatedPlayer.position])
 	} catch (error) {
-		console.log('error adding map to player')
-		next()
+		next('error adding map to player', error)
 	}
 })
 
@@ -316,5 +289,3 @@ router.post('/new', async (request, response) => {
 })
 
 module.exports = router
-
-router.post('/update-map', async (request, response) => {})
